@@ -3,6 +3,7 @@ package com.example.studentapp.controller;
 import com.example.studentapp.model.dto.TeacherRequest;
 import com.example.studentapp.model.dto.TeacherResponse;
 import com.example.studentapp.service.TeacherService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class TeacherController {
     }
 
     @PostMapping
-    public TeacherResponse createTeacher(@RequestBody TeacherRequest request) {
+    public TeacherResponse createTeacher(@RequestBody @Valid TeacherRequest request) {
         return teacherService.createTeacher(request);
     }
 

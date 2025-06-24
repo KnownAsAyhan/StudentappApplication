@@ -7,6 +7,7 @@ import com.example.studentapp.model.entity.Student;
 import com.example.studentapp.model.entity.Teacher;
 import com.example.studentapp.repository.TeacherRepository;
 import com.example.studentapp.service.StudentService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,12 +39,12 @@ public class StudentController {
 
 
     @PostMapping
-    public StudentResponse createStudent(@RequestBody StudentRequest request) {
+    public StudentResponse createStudent(@RequestBody @Valid StudentRequest request) {
         return studentService.createStudent(request);
     }
 
     @PutMapping("/{id}")
-    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody StudentRequest request) {
+    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody @Valid StudentRequest request) {
         return studentService.updateStudent(id, request);
     }
 
