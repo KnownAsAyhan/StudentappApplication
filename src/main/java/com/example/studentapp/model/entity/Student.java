@@ -1,4 +1,4 @@
-package com.example.studentapp.model;
+package com.example.studentapp.model.entity;
 
 // Tells Java this is a database entity
 import jakarta.persistence.*;
@@ -17,6 +17,10 @@ public class Student {
     private String name;
     private String department;
     private Double gpa;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 
 
 }

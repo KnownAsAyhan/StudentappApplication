@@ -1,6 +1,6 @@
 package com.example.studentapp.repository;
 
-import com.example.studentapp.model.Student;
+import com.example.studentapp.model.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // <Student, Long> means:

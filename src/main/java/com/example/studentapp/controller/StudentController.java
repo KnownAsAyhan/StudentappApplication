@@ -1,59 +1,60 @@
 package com.example.studentapp.controller;
 
-import com.example.studentapp.model.Student;
+import com.example.studentapp.model.dto.StudentWithTeacherResponse;
 import com.example.studentapp.model.dto.StudentRequest;
 import com.example.studentapp.model.dto.StudentResponse;
+import com.example.studentapp.model.entity.Student;
+import com.example.studentapp.model.entity.Teacher;
+import com.example.studentapp.repository.TeacherRepository;
 import com.example.studentapp.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // Tells Spring this class handles HTTP requests
-@RequestMapping("/students") // All endpoints start with /students
+@RestController
+@RequestMapping("/students")
 public class StudentController {
 
     private final StudentService studentService;
+    private final TeacherRepository teacherRepository;
     private final ModelMapper modelMapper;
 
-    // Spring injects the service automatically
-    public StudentController(StudentService studentService, ModelMapper modelMapper) {
+    public StudentController(StudentService studentService, TeacherRepository teacherRepository, ModelMapper modelMapper) {
         this.studentService = studentService;
+        this.teacherRepository = teacherRepository;
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public List<Student> getAllStudents() {
+    @GetMapping("")
+    public List<StudentResponse> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @GetMapping("/{id}")
     public StudentResponse getStudentById(@PathVariable Long id) {
-        Student student = studentService.getStudentById(id);
-        return modelMapper.map(student, StudentResponse.class);
+        return studentService.getStudentById(id);  // No need to map again here
     }
 
 
     @PostMapping
-    public Student createStudent(@RequestBody StudentRequest request) {
-//        Student student = new Student();
-//        student.setName(request.getName());
-//        student.setDepartment(request.getDepartment());
-//        student.setGpa(request.getGpa());
-        Student student = modelMapper.map(request, Student.class); // modelMapper using
-        return studentService.createStudent(student);
+    public StudentResponse createStudent(@RequestBody StudentRequest request) {
+        return studentService.createStudent(request);
     }
 
-
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody StudentRequest request) {
-        Student student = modelMapper.map(request, Student.class);
-        return studentService.updateStudent(id, student);
+    public StudentResponse updateStudent(@PathVariable Long id, @RequestBody StudentRequest request) {
+        return studentService.updateStudent(id, request);
     }
 
 
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
+    }
+
+    @GetMapping("/with-teacher")
+    public List<StudentWithTeacherResponse> getAllStudentsWithTeachers() {
+        return studentService.getAllStudentsWithTeachers();
     }
 }
