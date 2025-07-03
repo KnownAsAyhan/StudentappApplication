@@ -18,6 +18,10 @@ public class Student {
     private String department;
     private Double gpa;
 
+    @Lob
+    @Column(name = "photo_data", columnDefinition = "LONGBLOB")
+    private byte[] photoData;
+
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
