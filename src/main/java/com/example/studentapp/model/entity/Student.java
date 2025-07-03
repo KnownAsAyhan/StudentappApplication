@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity // This tells Spring to treat this class as a table
-@Data // Lombok adds getters, setters, toString, equals, hashCode
+@Data // Lombok adds getters, setters, to String, equals, hashCode
 public class Student {
 
     @Id // Marks this as the "primary key" of the table (unique ID)
